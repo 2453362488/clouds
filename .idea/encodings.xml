@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config3344" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config3355" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/cons80" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/consfeign" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dashboard" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka7001" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka7002" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eureka7003" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/eurekaClient7001" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hystrix9001" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proe8001" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proe8002" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proe8003" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/proeClient8001" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zuul9527" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
