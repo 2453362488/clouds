@@ -19,6 +19,7 @@
         <module>config3355</module>
         <module>eurekaClient7001</module>
         <module>proeClient8001</module>
+        <module>web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -63,9 +64,20 @@
 
     <build>
         <plugins>
+            <!-- 这个插件，可以将应用打包成一个可执行的jar包 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!-- 防止maven打包是出现问题 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
             </plugin>
         </plugins>
     </build>
