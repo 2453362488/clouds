@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>渐变色</title>
+    <style type="text/css">
+        canvas{
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <canvas width="800" height="500" id="myCanvas">
+        对不起，您的浏览器不支持画布，请升级浏览器！
+    </canvas>
+    <script type="text/javascript">
+        // 得到画布标签
+        var myCanvas = document.querySelector("#myCanvas");
+        // 上下文，就相当于打开Photoshop之后让你新建画布
+        var ctx = myCanvas.getContext("2d");
+        // 今后的操作都是这个画布的事情，都是ctx的事情，和myCanvas没有关系了。
+        var lingrad = ctx.createLinearGradient(100,100,400,400);    // 设置渐变(x1,y1,x2,y2)
+        lingrad.addColorStop(0,'red');  // 给渐变设置开始颜色
+        lingrad.addColorStop(1,'blue'); // 给渐变设置结束颜色
+        ctx.fillStyle = lingrad;        // ctx设置渐变的样式
+        ctx.fillRect(100,100,300,300);
+        ctx.font = '50px 微软雅黑';
+        ctx.fillText('你好',100,100);
+    </script>
+</body>
+</html>
