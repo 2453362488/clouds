@@ -1,0 +1,5 @@
+{
+    'bg_day' : '../../flappybird/bg_day.png',
+    'bg_night' : '../../flappybird/bg_night.png',
+    'land' : '../../flappybird/land.png'
+}
