@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>堆排序</title>
+	<style>
+	input#tin{
+		margin-bottom: 5px;
+		background-color: #fff;opacity:0.85;
+		width:20px;
+		height:25px; 
+		border-width: 1px;
+		font-size: 17px; 
+		color: #000; 
+		font-weight: 500; 
+		border-radius: 5px;
+		cursor:pointer; 
+	}
+	input#bin{
+		background-color: gray;
+		width:80px;
+		height:25px;
+		border-width: 2px;
+		font-size: 20px; 
+		color: #FFFFFF; 
+		font-weight: 500;
+		cursor:pointer; 
+		border-radius: 5px;
+	}
+	canvas#mycanvas{
+		border:1px solid;
+		width: 600px;
+		height: 300px;
+		margin-top: 5px;
+		border-radius: 5px;
+	}
+	div#container{
+		margin-left: 70px;
+	}
+	</style>
+</head>
+<body>  
+    <div id="container">
+        <div>
+            <p> 
+                <input type="button" onclick="showDemo()"id="bin" value="Show"/>
+            </p>
+			<canvas id="mycanvas"  ></canvas>
+        </div>
+    </div>
+</body>
+<script>
+var S;
+var Coordinate_y = 40;
+var Rect = new Array();
+var track_insert = new Array();
+var cons = 0;
+var cnt;
+
+function func() {
+//获取字符串，存入数组
+    S = new Array();
+	for(var i = 0; i < 100; i++){
+		S.push(Math.ceil(Math.random()*100));
+	}
+//依据数组元素，完成对象数组
+    for (var i = 0; i < S.length; i++) {
+        var rect = {
+            x: 3 * i,
+            y: Coordinate_y,
+            target_x: 3 * i,
+            target_y: Coordinate_y,
+            text: S[i]
+        }
+        Rect.push(rect);S.sort();
+    }
+    var startTime = new Date().getTime();
+    heapSort(S);
+    var endTime = new Date().getTime();
+    console.log(endTime-startTime);
+}
+
+function bubblingSort(arr) {
+    var i = arr.length, j;
+    var tempExchangVal;
+    while (i > 0) {
+        for (j = 0; j < i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                tempExchangVal = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = tempExchangVal;
+                track_insert.push(j);
+            }
+        }
+        i--;
+    }
+}
+//坐标更新
+function update() {
+    if (cons > track_insert.length) {
+        return;
+    }
+    if (cons == 0) {
+        cnt = track_insert[cons];
+        Rect[cnt].target_x = Rect[cnt + 1].x;
+        Rect[cnt + 1].target_x = Rect[cnt].x;
+        cons += 1;
+    }
+    if (Rect[cnt].x == Rect[cnt].target_x) {
+        if (cons == track_insert.length) {
+            cons += 1;
+            return;
+        }
+        var tem = Rect[cnt];
+        Rect[cnt] = Rect[cnt + 1];
+        Rect[cnt + 1] = tem;
+        cnt = track_insert[cons];
+        Rect[cnt].target_x = Rect[cnt + 1].x;
+        Rect[cnt + 1].target_x = Rect[cnt].x;
+        cons += 1;
+    } else {
+        Rect[cnt].x += 1;
+        Rect[cnt + 1].x -= 1;
+    }
+}
+//绘制图像
+function draw(context) {
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+	context.fillText("冒泡排序", 40, 20);
+    for (var i = 0; i < Rect.length; i++) {
+        if ((Rect[i].x - Rect[i].target_x) >= 2 || (Rect[i].x - Rect[i].target_x) < -2) {
+            context.fillStyle = "red";
+            context.fillRect(i*3, 40, 1, Rect[i].text);
+            context.fillStyle = "blue";
+         //   context.fillText(Rect[i].text, Rect[i].x + 10, Rect[i].y + 15);
+        } else {
+            context.strokeStyle = "blue";
+            context.strokeRect(i*3, 40, 1, Rect[i].text);
+            context.fillStyle = "blue";
+         //   context.fillText(Rect[i].text, Rect[i].x + 10, Rect[i].y + 15);
+        }
+    }
+}
+function showDemo() {
+    func();
+    var c = document.getElementById("mycanvas");
+    c.width = 600;
+    c.height = 300;
+    var context = c.getContext("2d");
+//40ms调用一次函数
+    setInterval(function() {
+        draw(context);
+        update();
+    }, 0);
+}
+/**
+ * 堆排序
+ */
+function heapSort(arr) {
+    var heapSize = arr.length;
+    buildHeap(arr);//构造一个所有节点都满足arr[parent[i]] > arr[i]的堆结构数组，这样就把值最大的那个节点换到了根节点
+    while(heapSize > 1) { //*1
+
+        //在当前树中，交换位于根节点的最大值和最后一个节点的值,这样就把最大值排在了最后一个节点，这样就排好了最大值
+        var temp = arr[0];
+        arr[0]=arr[heapSize-1];
+        arr[heapSize-1] = temp;
+
+        heapSize--;//当前树中最后一个节点已经排好了值，故后面就不用再考虑这个节点，故新的树的大小减一
+
+        if (heapSize>1) {
+            heapify(arr, heapSize, 0);//上面的交换操作产生了新的根节点，新的根节点只是通过跟最后一个节点交换得到的值，故新的根节点不满足条件arr[parent[i]]<arr[i]，所以要对根节点再次进行h
+        }
+    }
+}
+
+/**
+ * @description 构造一个所有节点都满足arr[parent[i]] > arr[i]的堆结构数组
+ * @param {Array} arr 待排序数组
+ */
+function buildHeap(arr) {
+    var heapSize = arr.length;
+    var firstHeapifyIndex = Math.floor(heapSize/2-1);//从树的倒数第二层的最后一个有子节点的节点（对于满二叉树就是倒数第二层的最后一个节点）开始进行heapify处理。Math.floor(heapSize/2-1)就是这个最后一个有子节点的节点索引。
+    for (var i=firstHeapifyIndex; i >= 0; i--) {//从0到firstHeapifyIndex都要进行heapify处理，才能把最大的那个节点换到根节点
+        heapify(arr, heapSize, i);
+    }
+}
+
+/**
+ * @description 以数组arr的前heapSize个节点为树，对其中索引为i的节点向子节点进行替换，直到满足从i往下的子节点都有arr[parent[i]]>=arr[i]
+ * @param {*} arr TYPE Array  待排序的数组
+ * @param {*} heapSize TYPE Number 待排序的数组中要作为当前树处理的从前往后数的节点个数，即待排序数组中前heapSize个点是要作为树来处理
+ * @param {*} i TYPE Number arr数组中、heapSize长度的树中的当前要进行往子节点替换的节点的索引
+ */
+function heapify(arr, heapSize, i) {
+    var leftIndex = i * 2 + 1;//索引i的节点的左子节点索引
+    var rightIndex = i * 2 + 2;//索引i的节点的右子节点索引
+    var biggestValueIndex = i;
+    if (leftIndex < heapSize && arr[leftIndex] > arr[biggestValueIndex]) {
+        //节点的最大index为heapSize-1
+        //注意：这两次比较要跟arr[biggestValueIndex]比较，不能跟arr[i]比较，因为biggestValueIndex是会在左右i之间更新的
+        biggestValueIndex = leftIndex; //如果左子节点的值大于biggestValueIndex的值（此时就是根节点的值），那么更新biggestValueIndex为左子节点索引
+    }
+    if (rightIndex < heapSize && arr[rightIndex] > arr[biggestValueIndex]) {
+        biggestValueIndex = rightIndex;//如果右子节点的值大于biggestValueIndex的值(此时可能是根节点的值，也可能是左子节点的值)，那么更新biggestValueIndex为右子节点索引
+    }
+    if (biggestValueIndex !== i) { //如果biggestValueIndex是左子节点索引或右子节点索引，那么交换根节点与biggestValueIndex节点的值
+        var temp = arr[i];
+        arr[i] = arr[biggestValueIndex];
+        arr[biggestValueIndex] = temp;
+        track_insert.push(i);
+
+        //交换后，被交换的那个子节点（左子节点或右子节点）往下可能就不再满足[parent[i]]>=arr[i]，所以要继续对biggestValueIndex进行heaify处理，即将biggestValueIndex可能需要和子节点进行值交换,直到树的这个分支到叶子节点都满足arr[parent[i]]>=arr[i]
+        heapify(arr, heapSize, biggestValueIndex);//要
+
+    }
+}
+</script>
+</html>
