@@ -1,0 +1,3 @@
+server:
+  port: 8666                   # mapper映射文件
+

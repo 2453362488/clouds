@@ -20,4 +20,19 @@ public class HelloController {
         return "/html/test.html";
     }
 
+    @RequestMapping("/special")
+    public String special(){
+        return "special.html";
+    }
+
+    @RequestMapping("/quickSort")
+    public String quickSort(){
+        return "/quickSort.html";
+    }
+
+    @RequestMapping("/love")
+    public String love(){
+        return "love.html";
+    }
+
 }
